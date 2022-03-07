@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { MouseEventHandler, ReactElement } from 'react';
 
 import {
   Dialog,
@@ -9,7 +9,13 @@ import {
   Typography,
 } from '@mui/material';
 
-const LaunchesDialogDelete = ({ open, onClose, onDelete }: any): ReactElement => (
+type LaunchesDialogDeleteProps = {
+  open: boolean;
+  onClose: MouseEventHandler<HTMLButtonElement>;
+  onDelete: MouseEventHandler<HTMLButtonElement> | undefined;
+}
+
+const LaunchesDialogDelete = ({ open, onClose, onDelete }: LaunchesDialogDeleteProps): ReactElement => (
   <Dialog open={open} fullWidth onClose={onClose}>
     <DialogTitle>Are you sure?</DialogTitle>
     <DialogContent>

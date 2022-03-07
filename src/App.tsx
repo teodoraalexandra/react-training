@@ -2,7 +2,7 @@ import { FC, ReactElement } from 'react';
 import { useRoutes } from 'react-router-dom';
 
 import { DThemeOptions } from '@daimler/mui5-theme';
-import { createTheme, ThemeProvider, Typography } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material';
 import { CssBaseline } from '@material-ui/core';
 
 import routes from './routes';

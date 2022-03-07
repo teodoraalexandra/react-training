@@ -11,18 +11,20 @@ import {
   Typography,
   Button,
 } from '@mui/material';
+import { SpaceStoreState } from '../../state/spaceStore';
 
 import { useSpaceStore } from '../../state';
 
 import Placeholder from '../../assets/images/placeholder.jpg';
 
 import LaunchesDialogDelete from './LaunchesDialogDelete';
+import { RocketItem } from '../../models/models';
 
-const LaunchesCard = (props: any): ReactElement => {
+const LaunchesCard = (props: { item: RocketItem; }): ReactElement => {
   // const { t } = useTranslation();
   // const navigate = useNavigate();
 
-  const { spaceDeleteLaunch } = useSpaceStore((state: any) => state);
+  const { spaceDeleteLaunch } = useSpaceStore((state: SpaceStoreState) => state);
 
   const [openDialogDelete, setOpenDialogDelete] = useState(false);
 

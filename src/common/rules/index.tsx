@@ -27,7 +27,7 @@ export const ruleEmailAddress = {
   }
 };
 
-export const rulePasswordConfirmation = (password: string, confirm: string): any => {
+export const rulePasswordConfirmation = (password: string, confirm: string): string | boolean => {
   if (password !== confirm) {
     return 'Passwort-Bestätigung weicht ab';
   }

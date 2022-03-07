@@ -1,10 +1,6 @@
 import {
   FC, ReactElement, useEffect, useState
 } from 'react';
-import { Typography, Box } from '@mui/material';
-
-import axios from 'axios';
-
 import { useSpaceStore } from '../state';
 
 import LaunchesMain from '../components/launches/LaunchesMain';

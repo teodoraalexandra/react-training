@@ -34,7 +34,7 @@
     "max-len": ["error", { "code": 255 }],
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
-    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-explicit-any": "error",
     "react/function-component-definition": [2, { "namedComponents": "arrow-function" }]
   },
   "settings": {

@@ -8,12 +8,19 @@ import {
 import { useSpaceStore, usePaginationStore } from '../../state';
 
 import LaunchesCard from './LaunchesCard';
+import { SpaceStoreState } from '../../state/spaceStore';
+import { PaginationStoreState } from '../../state/paginationStore';
+import { RocketItem } from '../../models/models';
+
+type LaunchesMainProps = {
+  launches: RocketItem[];
+  today: boolean;
+}
 
 // Arrow functions
-const LaunchesMain: FC<any> = (props:any): ReactElement => {
-  // const { launches } = props;
-
-  const { launches, spaceFetchData } = useSpaceStore((state:any) => state);
+const LaunchesMain = (props: LaunchesMainProps): ReactElement => {
+  const { launches, today } = props;
+  const { launchesRockets, spaceFetchData } = useSpaceStore((state: SpaceStoreState) => state);
 
   const {
     init,
@@ -21,13 +28,13 @@ const LaunchesMain: FC<any> = (props:any): ReactElement => {
     currentPage,
     maxPage,
     paginatedData
-  } = usePaginationStore((state:any) => state);
+  } = usePaginationStore((state: PaginationStoreState) => state);
 
   // init(launches, 4, 1)
 
   useEffect(() => {
-    init(launches, 4, 1);
-  }, [launches]);
+    init(launchesRockets, 4, 1);
+  }, [launchesRockets]);
 
   console.log(props);
   return (
@@ -36,7 +43,7 @@ const LaunchesMain: FC<any> = (props:any): ReactElement => {
       <Typography gutterBottom sx={{ mb: 5 }}>Show all the SpaceX launches</Typography>
       <Grid container spacing={{ xs: 3, lg: 4 }}>
         {
-        paginatedData.map((item:any) => <LaunchesCard key={item.id} item={item} />)
+        paginatedData.map((item: RocketItem) => <LaunchesCard key={item.id} item={item} />)
       }
       </Grid>
       { paginatedData.length > 0 && <Pagination count={maxPage} page={currentPage} onChange={(event, value) => jump(value)} /> }

@@ -1,8 +1,9 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 import { useAppStore } from '../../state';
+import { RocketItem } from '../../models/models';
 
-const processData = async (options: any = {}): Promise<any> => {
+const processData = async (options = {}): Promise<Promise<AxiosResponse<RocketItem>> | Promise<{ error: boolean }>> => {
   let requestConfig: AxiosRequestConfig = {
     baseURL: 'http://localhost:8080',
     url: '',

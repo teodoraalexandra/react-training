@@ -1,20 +1,27 @@
 import create from 'zustand';
 
-import { logger } from './middleware';
+import { logger } from './middleware.js';
+import { CustomAlert, TitleEnum } from '../models/models';
 
-const initialState: any = {
-  alert: null,
+export interface AppStoreState {
+  appResetAlert?: () => void;
+  alert?: CustomAlert;
+  showLoading?: boolean;
+}
+
+const initialState: AppStoreState = {
+  alert: { text: '', severity: 'info', duration: 0 },
   showLoading: false,
 };
 
-const store = (set: any) => ({
+const store = (set: (param: AppStoreState) => void) => ({
   ...initialState,
 
   appResetAll: () => set({ ...initialState }),
 
-  appResetAlert: () => set({ alert: null }),
+  appResetAlert: () => set({ alert: { text: '', severity: 'info', duration: 0 } }),
 
-  appSetAlert: (alert: any) => set({ alert }),
+  appSetAlert: (alert: CustomAlert) => set({ alert }),
 
   appSetShowLoading: (showLoading: boolean) => set({ showLoading }),
 

@@ -1,15 +1,24 @@
 import create from 'zustand';
 import axios from 'axios';
 
-import { logger } from './middleware';
+import { logger } from './middleware.js';
 
 import { useAppStore } from './index';
+import { RocketItem } from '../models/models';
 
-const initialState: any = {
-  launches: []
+export interface SpaceStoreState {
+  launchesRockets: RocketItem[];
+}
+
+const initialState: SpaceStoreState = {
+  launchesRockets: []
 };
 
-const store = (set: any, get: any) => ({
+type getAction = {
+  launches: RocketItem[];
+}
+
+const store = (set: (param: SpaceStoreState) => void, get: () => getAction) => ({
   ...initialState,
 
   spaceFetchData: () => {
@@ -20,7 +29,7 @@ const store = (set: any, get: any) => ({
     axios('https://api.spacexdata.com/v5/launches')
       .then((response) => {
         // reduce the date
-        const reducedLaunches = response.data.map((item:any) => ({
+        const reducedLaunches = response.data.map((item: RocketItem) => ({
           id: item.id,
           name: item.name,
           details: item.details,
@@ -29,7 +38,7 @@ const store = (set: any, get: any) => ({
         }));
         // console.log(reducedLaunches);
         // change the store state
-        set({ launches: reducedLaunches });
+        set({ launchesRockets: reducedLaunches });
         useAppStore.setState({ showLoading: false, alert: { text: 'Data from SpaceX are loaded!', duration: 4000 } });
         // useAppStore.setState({ alert: { text: 'Data from SpaceX are loaded!', duration: 4000 } });
       }).catch((error) => {
@@ -42,10 +51,10 @@ const store = (set: any, get: any) => ({
 
   spaceDeleteLaunch: (id: string) => {
     // filter out
-    const filteredArray = get().launches.filter((item:any) => item.id !== id);
+    const filteredArray = get().launches.filter((item: RocketItem) => item.id !== id);
 
     // update state
-    set({ launches: filteredArray });
+    set({ launchesRockets: filteredArray });
   }
 
 });

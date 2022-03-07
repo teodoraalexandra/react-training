@@ -1,6 +1,20 @@
 import create from 'zustand';
 
-import { logger } from './middleware';
+import { logger } from './middleware.js';
+import { RocketItem } from '../models/models';
+
+export interface PaginationStoreState {
+  data: RocketItem[],
+  paginatedData?: RocketItem[],
+  currentPage: number,
+  maxPage?: number,
+  itemsPerPage: number,
+  startPage?: number,
+  beginItem?: number,
+  endItem?: number,
+  countItems?: number,
+  init?: boolean;
+}
 
 const initialState = {
   data: [],
@@ -14,12 +28,25 @@ const initialState = {
   countItems: 0,
 };
 
-const store = (set:any, get:any) => ({
+type getAction = {
+  sendNewSlice: { (params: { currentPage: number, data?: RocketItem[], itemsPerPage?: number, init?: boolean }): void };
+  data: RocketItem[],
+  paginatedData: RocketItem[],
+  currentPage: number,
+  maxPage: number,
+  itemsPerPage: number,
+  startPage: number,
+  beginItem: number,
+  endItem: number,
+  countItems: number,
+}
+
+const store = (set: (param: PaginationStoreState) => void, get: () => getAction) => ({
   ...initialState,
 
   reset: () => set({ ...initialState }),
 
-  sendNewSlice: (options:any):void => {
+  sendNewSlice: (options: PaginationStoreState):void => {
     const { init, currentPage } = options;
 
     const data = init ? options.data : get().data;
@@ -52,7 +79,7 @@ const store = (set:any, get:any) => ({
     });
   },
 
-  init: (data:any, itemsPerPage = 1, currentPage = 1) => {
+  init: (data: RocketItem[], itemsPerPage = 1, currentPage = 1) => {
     if (!data) return;
 
     get().sendNewSlice({
